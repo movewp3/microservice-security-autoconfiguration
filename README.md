@@ -8,7 +8,7 @@ To enable, just add the following dependency to your POM:
 
 ```                                
 <dependency>
-    <groupId>io.dwpbank.mp</groupId>
+    <groupId>io.dwpbank.movewp3</groupId>
     <artifactId>spring-security-oidc</artifactId>
     <version>${dwp-spring-security-oidc.version}</version>
 </dependency>
