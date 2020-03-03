@@ -11,8 +11,8 @@ To enable, just add the following dependency to your POM:
 ```                                
 <dependency>
     <groupId>io.dwpbank.movewp3</groupId>
-    <artifactId>spring-security-oidc</artifactId>
-    <version>${dwp-spring-security-oidc.version}</version>
+    <artifactId>microservice-security-autoconfiguration</artifactId>
+    <version>${movewp3-microservice-security-autoconfiguration.version}</version>
 </dependency>
 ```
 

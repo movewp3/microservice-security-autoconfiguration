@@ -1,4 +1,4 @@
-package io.dwpbank.movewp3.spring.security.oidc;
+package io.dwpbank.movewp3.microservice.security.autoconfiguration;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

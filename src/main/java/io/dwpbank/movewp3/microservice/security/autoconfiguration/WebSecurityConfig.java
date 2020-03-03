@@ -1,4 +1,4 @@
-package io.dwpbank.movewp3.spring.security.oidc;
+package io.dwpbank.movewp3.microservice.security.autoconfiguration;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 /**
  * A {@link WebSecurityConfigurerAdapter} that enables OIDC-based authentication for all HTTP endpoints (except for
- * <code>/actuator/*</code> as soon as the property <code>spring.security.oauth2.resourceserver.jwt.jwk-set-uri</code>
+ * <code>/actuator/*</code> as soon as the property <code>microservice.security.oauth2.resourceserver.jwt.jwk-set-uri</code>
  * is set to the JWK Set URI of an OpenID Connect provider.
  */
 @Configuration
