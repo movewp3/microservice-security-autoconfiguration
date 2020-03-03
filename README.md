@@ -1,5 +1,7 @@
 # dwpbank MoveWP3 Spring Security OIDC Support
- 
+
+![Build status](https://travis-ci.com/movewp3/spring-security-oidc.svg?branch=master)
+
 A Spring-Security-based library providing a no-frills approach to enable the verification of HTTP/REST authentication via OpenID Connect for a microservice.
 
 ## Usage
