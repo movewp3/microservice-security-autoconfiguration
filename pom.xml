@@ -142,6 +142,17 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-gpg-plugin</artifactId>
                     <version>${maven-gpg-plugin.version}</version>
+                    <configuration>
+                        <executable>gpg2</executable>
+                        <defaultKeyring>false</defaultKeyring>
+                        <passphrase>${env.PASSPHRASE}</passphrase>
+                        <publicKeyring>${env.TRAVIS_BUILD_DIR}/pubring.gpg</publicKeyring>
+                        <secretKeyring>${env.TRAVIS_BUILD_DIR}/secring.gpg</secretKeyring>
+                        <gpgArguments>
+                            <arg>--pinentry-mode</arg>
+                            <arg>loopback</arg>
+                        </gpgArguments>
+                    </configuration>
                     <executions>
                         <execution>
                             <id>sign-artifacts</id>
@@ -211,7 +222,7 @@
 
     <profiles>
         <profile>
-            <id>release</id>
+            <id>deploy</id>
             <build>
                 <plugins>
                     <plugin>
