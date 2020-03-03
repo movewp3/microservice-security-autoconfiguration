@@ -1,4 +1,4 @@
-# dwpbank MoveWP3 Spring Security OIDC Support
+# dwpbank MoveWP3 Microservice Security Autoconfiguration
 
 ![Build status](https://travis-ci.com/movewp3/spring-security-oidc.svg?branch=master)
 

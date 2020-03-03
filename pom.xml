@@ -31,6 +31,17 @@
         <url>https://github.com/movewp3/microservice-security-autoconfiguration/tree/master</url>
     </scm>
 
+    <distributionManagement>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <properties>
         <java.version>11</java.version>
 
@@ -43,9 +54,12 @@
 
         <!-- Plugins -->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
         <maven-site-plugin.version>3.8.2</maven-site-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
         <sortpom-maven-plugin.version>2.11.0</sortpom-maven-plugin.version>
         <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
     </properties>
@@ -125,12 +139,48 @@
                     </configuration>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>${maven-gpg-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>${maven-javadoc-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <artifactId>maven-site-plugin</artifactId>
                     <version>${maven-site-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven-source-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
@@ -144,7 +194,44 @@
                         <rulesUri>file://${project.basedir}/version-rules.xml</rulesUri>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>${nexus-staging-maven-plugin.version}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <serverId>ossrh</serverId>
+                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                        <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
