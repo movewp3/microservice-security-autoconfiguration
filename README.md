@@ -20,11 +20,11 @@ The `/actuator/*` endpoints are currently exempt from authentication. This will 
 
 ## Contributing
 
-Merge requests are welcome. In order to make sure that your change can be easily merged, please follow these steps:
+Pull requests are welcome. In order to make sure that your change can be easily merged, please follow these steps:
 
 * Develop your changes in a feature branch named `feature/...`
 * Base your feature branch on `master`
-* Open your merge request against `master`
+* Open your pull request against `master`
 * Don't forget to implement tests
 
 In case of any questions, feel open an issue in this project to discuss intended changes upfront.
