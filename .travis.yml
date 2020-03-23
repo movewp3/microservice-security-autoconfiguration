@@ -1,5 +1,7 @@
-language: java
+git:
+  depth: false
 jdk: openjdk11
+language: java
 script:
 - "./mvnw clean deploy -Pdeploy --batch-mode --errors --fail-at-end --show-version
   --settings deployment/settings.xml -Dgpg.keyname=F0FE0BBE14902B34"
