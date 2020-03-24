@@ -1,7 +1,13 @@
-git:
-  depth: false
 jdk: openjdk11
 language: java
+before_script:
+- if [ -n "$TRAVIS_TAG" ]; then
+    export VERSIONING_GIT_TAG=$TRAVIS_TAG;
+  elif [ -n "$TRAVIS_PULL_REQUEST_BRANCH" ]; then
+    export VERSIONING_GIT_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH;
+  else
+    export VERSIONING_GIT_BRANCH=$TRAVIS_BRANCH;
+  fi
 script:
 - "./mvnw clean deploy -Pdeploy --batch-mode --errors --fail-at-end --show-version
   --settings deployment/settings.xml -Dgpg.keyname=F0FE0BBE14902B34"
