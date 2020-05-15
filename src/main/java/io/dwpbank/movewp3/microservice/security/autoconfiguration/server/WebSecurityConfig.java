@@ -1,10 +1,11 @@
-package io.dwpbank.movewp3.microservice.security.autoconfiguration;
+package io.dwpbank.movewp3.microservice.security.autoconfiguration.server;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 
 /**
  * A {@link WebSecurityConfigurerAdapter} that enables OIDC-based authentication for all HTTP endpoints (except for
@@ -28,6 +29,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
               .oauth2ResourceServer().jwt();
     // @formatter:on
+
+    http.sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
   }
 }
 
