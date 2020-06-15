@@ -5,13 +5,13 @@
   </branch>
   <branch>
     <pattern><![CDATA[feature/(?<feature>.+)]]></pattern>
-    <versionFormat>${feature}-SNAPSHOT</versionFormat>
+    <versionFormat>${version}</versionFormat>
   </branch>
   <tag>
     <pattern><![CDATA[v(?<tagVersion>[0-9].*)]]></pattern>
     <versionFormat>${tagVersion}</versionFormat>
   </tag>
   <commit>
-    <versionFormat>${commit.short}</versionFormat>
+    <versionFormat>${version}</versionFormat>
   </commit>
 </gitVersioning>
