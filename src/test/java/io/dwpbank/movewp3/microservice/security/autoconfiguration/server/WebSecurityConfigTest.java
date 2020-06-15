@@ -1,4 +1,4 @@
-package io.dwpbank.movewp3.microservice.security.autoconfiguration;
+package io.dwpbank.movewp3.microservice.security.autoconfiguration.server;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

@@ -49,7 +49,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Dependencies -->
+        <fabric8-mockwebserver.version>0.1.8</fabric8-mockwebserver.version>
+        <jackson.version>2.11.0</jackson.version>
         <junit-jupiter.version>5.6.2</junit-jupiter.version>
+        <okhttp3.version>4.7.2</okhttp3.version>
         <spring-boot.version>[2.2.0.RELEASE,2.4.0.M0)</spring-boot.version>
         <spring-security.version>[5.2.2.RELEASE,5.4.0.M0)</spring-security.version>
 
@@ -82,11 +85,40 @@
             <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-oauth2-resource-server</artifactId>
             <version>${spring-security.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>mockwebserver</artifactId>
+            <version>${okhttp3.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>mockwebserver</artifactId>
+            <version>${fabric8-mockwebserver.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>tools</artifactId>
+                    <groupId>com.sun</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -143,6 +175,15 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-gpg-plugin</artifactId>
                     <version>${maven-gpg-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                     <configuration>
                         <executable>gpg2</executable>
                         <defaultKeyring>false</defaultKeyring>
@@ -154,15 +195,6 @@
                             <arg>loopback</arg>
                         </gpgArguments>
                     </configuration>
-                    <executions>
-                        <execution>
-                            <id>sign-artifacts</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>sign</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
