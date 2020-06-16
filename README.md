@@ -1,6 +1,6 @@
 # dwpbank MoveWP3 Microservice Security Autoconfiguration
 
-[![Build status](https://travis-ci.com/movewp3/microservice-security-autoconfiguration.svg?branch=master)](https://travis-ci.com/movewp3/microservice-security-autoconfiguration) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.dwpbank.movewp3/microservice-security-autoconfiguration/badge.svg)](https://search.maven.org/artifact/io.dwpbank.movewp3/microservice-security-autoconfiguration)
+[![Build status](https://travis-ci.com/movewp3/microservice-security-autoconfiguration.svg?branch=master)](https://img.shields.io/travis/com/movewp3/microservice-security-autoconfiguration) [![Maven Central](https://img.shields.io/maven-central/v/io.dwpbank.movewp3/microservice-security-autoconfiguration)](https://search.maven.org/artifact/io.dwpbank.movewp3/microservice-security-autoconfiguration)
 
 
 A Spring-Security-based library providing a no-frills approach to enable the verification of HTTP/REST authentication via OpenID Connect and consumption of other OAuth2-protected services for a microservice.
