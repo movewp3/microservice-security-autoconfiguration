@@ -3,6 +3,8 @@ package io.dwpbank.movewp3.microservice.security.autoconfiguration.client;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +14,6 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProvider;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProviderBuilder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -56,8 +57,8 @@ import org.springframework.web.reactive.function.client.WebClient;
  * </pre>
  */
 @Configuration
-@ConditionalOnBean(ClientRegistration.class)
-@AutoConfigureAfter({WebClientAutoConfiguration.class})
+@ConditionalOnBean(ClientRegistrationRepository.class)
+@AutoConfigureAfter({WebClientAutoConfiguration.class, OAuth2ClientAutoConfiguration.class, JacksonAutoConfiguration.class})
 public class WebClientOauth2AutoConfiguration {
 
   @Bean

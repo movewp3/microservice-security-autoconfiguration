@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.dwpbank.movewp3</groupId>
     <artifactId>microservice-security-autoconfiguration</artifactId>
-    <version>0.5.1-SNAPSHOT</version>
+    <version>0.6.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>MoveWP3 Microservice Security Autoconfiguration</name>
@@ -50,25 +50,30 @@
 
         <!-- Dependencies -->
         <fabric8-mockwebserver.version>0.1.8</fabric8-mockwebserver.version>
-        <jackson.version>2.11.0</jackson.version>
-        <junit-jupiter.version>5.6.2</junit-jupiter.version>
-        <okhttp3.version>4.7.2</okhttp3.version>
-        <spring-boot.version>[2.2.0.RELEASE,2.4.0.M0)</spring-boot.version>
-        <spring-security.version>[5.2.2.RELEASE,5.4.0.M0)</spring-security.version>
+        <jackson.version>2.11.2</jackson.version>
+        <junit-jupiter.version>5.7.0</junit-jupiter.version>
+        <okhttp3.version>4.9.0</okhttp3.version>
+        <spring-boot.version>[2.3.0.RELEASE,2.4.0.M0)</spring-boot.version>
+        <spring-security.version>[5.3.0.RELEASE,5.4.0.M0)</spring-security.version>
 
         <!-- Plugins -->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
-        <maven-site-plugin.version>3.9.0</maven-site-plugin.version>
+        <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
-        <sortpom-maven-plugin.version>2.11.0</sortpom-maven-plugin.version>
-        <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
+        <sortpom-maven-plugin.version>2.12.0</sortpom-maven-plugin.version>
+        <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-client</artifactId>
@@ -153,6 +158,7 @@
                     <artifactId>sortpom-maven-plugin</artifactId>
                     <version>${sortpom-maven-plugin.version}</version>
                     <configuration>
+                        <createBackupFile>false</createBackupFile>
                         <expandEmptyElements>false</expandEmptyElements>
                         <keepBlankLines>true</keepBlankLines>
                         <nrOfIndentSpace>4</nrOfIndentSpace>
@@ -235,7 +241,8 @@
                     <artifactId>versions-maven-plugin</artifactId>
                     <version>${versions-maven-plugin.version}</version>
                     <configuration>
-                        <rulesUri>file://${project.basedir}/version-rules.xml</rulesUri>
+                        <generateBackupPoms>false</generateBackupPoms>
+                        <rulesUri>https://raw.githubusercontent.com/movewp3/version-rules/master/version-rules.xml</rulesUri>
                     </configuration>
                 </plugin>
                 <plugin>
