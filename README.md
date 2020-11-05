@@ -21,7 +21,10 @@ To make use if this starter, add the following dependency to your POM;
 
 To enable OAuth2/OpenID-Connect-based protection for your resource server, make sure to set the property `spring.security.oauth2.resourceserver.jwt.jwk-set-uri`. We recommend that you test proper authentication handling from within your unit tests. For an example, refer to `WebSecurityConfigTest`.
 
-The `/actuator/*` endpoints are currently exempt from authentication. This will most likely change in the future.
+The `/actuator/*` endpoints are currently exempt from authentication. 
+You can whitelist other endpoints through whitelist property, i.e.:
+`io.dwpbank.movewp3.microservice.security.whitelist=/actuator/**,/bar/**`
+This will most likely change in the future.
 
 ### Client
 
