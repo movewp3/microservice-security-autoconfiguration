@@ -21,7 +21,10 @@ import org.springframework.web.context.WebApplicationContext;
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @SpringBootApplication
-@SpringBootTest(properties = {"spring.security.oauth2.resourceserver.jwt.jwk-set-uri=http://foo"})
+@SpringBootTest(properties = {
+    "spring.security.oauth2.resourceserver.jwt.jwk-set-uri=http://foo",
+    "io.dwpbank.movewp3.microservice.security.whitelist=/actuator/**,/bar/**"
+})
 @ContextConfiguration
 public class WebSecurityConfigTest {
 
@@ -44,6 +47,13 @@ public class WebSecurityConfigTest {
     mockMvc
         .perform(get("/foo"))
         .andExpect(status().isUnauthorized());
+  }
+
+  @Test
+  public void whitelistedAccessReturnsNotFound() throws Exception {
+    mockMvc
+        .perform(get("/bar/foo"))
+        .andExpect(status().isNotFound());
   }
 
   @Test

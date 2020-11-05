@@ -1,5 +1,6 @@
 package io.dwpbank.movewp3.microservice.security.autoconfiguration.server;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,12 +18,17 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @ConditionalOnProperty("spring.security.oauth2.resourceserver.jwt.jwk-set-uri")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
+  @Value("${io.dwpbank.movewp3.microservice.security.whitelist:/actuator/**}")
+  private String[] whitelist;
+
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http
         .authorizeRequests()
-          .antMatchers("/actuator/**")
+          .antMatchers(whitelist)
             .permitAll()
           .anyRequest()
               .authenticated()
