@@ -13,6 +13,12 @@ public class TestController {
     return "foo";
   }
 
+  @GetMapping("bar/foo")
+  public @ResponseBody
+  String barfoo() {
+    return "barfoo";
+  }
+
   @GetMapping("/actuator/bar")
   public @ResponseBody
   String bar() {

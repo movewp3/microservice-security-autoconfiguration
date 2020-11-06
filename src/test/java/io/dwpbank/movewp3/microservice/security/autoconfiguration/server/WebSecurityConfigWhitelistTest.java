@@ -9,24 +9,24 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-@ExtendWith(SpringExtension.class)
-@WebAppConfiguration
-@SpringBootApplication
-@SpringBootTest(properties = {
+@WebMvcTest
+@ImportAutoConfiguration({WebSecurityConfig.class})
+@TestPropertySource(properties = {
     "spring.security.oauth2.resourceserver.jwt.jwk-set-uri=http://foo",
-    "io.dwpbank.movewp3.microservice.security.whitelist=/actuator/**,/bar/**"
-})
-@ContextConfiguration
-public class WebSecurityConfigTest {
+    "io.dwpbank.movewp3.microservice.security.whitelist=/bar/**,/whitelisted/**"})
+class WebSecurityConfigWhitelistTest {
 
   @Autowired
   private WebApplicationContext context;
@@ -34,7 +34,7 @@ public class WebSecurityConfigTest {
   private MockMvc mockMvc;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     mockMvc = MockMvcBuilders
         .webAppContextSetup(context)
         .alwaysDo(print())
@@ -43,23 +43,30 @@ public class WebSecurityConfigTest {
   }
 
   @Test
-  public void unauthenticatedAccessReturnsUnauthorized() throws Exception {
+  void unauthenticatedAccessReturnsUnauthorized() throws Exception {
     mockMvc
         .perform(get("/foo"))
         .andExpect(status().isUnauthorized());
   }
 
   @Test
-  public void whitelistedAccessReturnsNotFound() throws Exception {
+  void whitelistedAccessReturnsOk() throws Exception {
     mockMvc
         .perform(get("/bar/foo"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  void whitelistedButNotImplementedAccessReturnsNotFound() throws Exception {
+    mockMvc
+        .perform(get("/whitelisted/foo"))
         .andExpect(status().isNotFound());
   }
 
   @Test
-  public void actuatorCanBeAccessedWithoutAuthentication() throws Exception {
+  void actuatorCanNotBeAccessedIfNotWhitelisted() throws Exception {
     mockMvc
         .perform(get("/actuator/bar"))
-        .andExpect(status().isOk());
+        .andExpect(status().isUnauthorized());
   }
 }
