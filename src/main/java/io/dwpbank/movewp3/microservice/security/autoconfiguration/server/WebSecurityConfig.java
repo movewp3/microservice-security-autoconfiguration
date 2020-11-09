@@ -1,9 +1,11 @@
 package io.dwpbank.movewp3.microservice.security.autoconfiguration.server;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,16 +21,20 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-  @Value("${io.dwpbank.movewp3.microservice.security.whitelist:/actuator/**}")
-  private String[] whitelist;
+  @Value("${io.dwpbank.movewp3.microservice.security.whitelist:#{null}}")
+  private Optional<String[]> whitelist;
 
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    whitelist.ifPresent(web.ignoring()::antMatchers);
+  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http
         .authorizeRequests()
-          .antMatchers(whitelist)
+          .antMatchers("/actuator/**")
             .permitAll()
           .anyRequest()
               .authenticated()
