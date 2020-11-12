@@ -40,9 +40,8 @@ Make sure to only submit requests via `WebClient`s created via this builder for 
 Pull requests are welcome. In order to make sure that your change can be easily merged, please follow these steps:
 
 * Develop your changes in a feature branch named `feature/...`
-* Base your feature branch on `master`
-* Open your pull request against `master`
+* Base your feature branch on `main`
+* Open your pull request against `main`
 * Don't forget to implement tests
 
 In case of any questions, feel open an issue in this project to discuss intended changes upfront.
-
