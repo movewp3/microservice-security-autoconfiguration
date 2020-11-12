@@ -3,7 +3,6 @@ package io.dwpbank.movewp3.microservice.security.autoconfiguration.server;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -12,30 +11,31 @@ public class TestController {
 
   @GetMapping("/foo")
   public @ResponseBody
-  String foo() {
+  String doFoo() {
     return "foo";
   }
 
   @PostMapping("post/bar")
   public @ResponseBody
-  String post(@RequestBody String body) {
+  String doPost(@RequestBody String body) {
     return body;
-  }
-
-  @PutMapping("put/bar")
-  public @ResponseBody
-  void put(@RequestBody String body) {
   }
 
   @GetMapping("get/bar")
   public @ResponseBody
-  String get() {
+  String doGet() {
     return "get/bar";
   }
 
-  @GetMapping("/actuator/bar")
+  @GetMapping("/actuator/get")
   public @ResponseBody
-  String bar() {
+  String doGetActuator() {
     return "bar";
+  }
+
+  @PostMapping("actuator/post")
+  public @ResponseBody
+  String doPostActuator(@RequestBody String body) {
+    return body;
   }
 }
