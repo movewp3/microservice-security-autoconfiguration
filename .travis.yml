@@ -8,6 +8,7 @@ before_script:
   else
     export VERSIONING_GIT_BRANCH=$TRAVIS_BRANCH;
   fi
+install: true
 script:
 - .travis/build.sh
 env:
