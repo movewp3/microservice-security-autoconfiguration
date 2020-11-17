@@ -9,16 +9,11 @@ before_script:
     export VERSIONING_GIT_BRANCH=$TRAVIS_BRANCH;
   fi
 script:
-- "./mvnw clean deploy -Pdeploy --batch-mode --errors --fail-at-end --show-version
-  --settings deployment/settings.xml -Dgpg.keyname=F0FE0BBE14902B34"
+- .travis/build.sh
 env:
   global:
   - secure: qXiGhMbUMPbgPIh/XTz1ASi0A6SfOFecPpsvMBATstvL+N5QXOZWk40T68+EObQh/htF+NAqkq04i2vHUkRzh1YwNKW6H9RIwogcRDlHVXvbFyD77C98wJhPZVMMYx/DzJY5joiiq9cTAMiIAlnZpIkSvAhNZ1F9IyOpORTE220/K2fthpxOOw9z7w5UUCBWs+NpqZkUqaoGMDvNf2SWyRbosZx3yCkzIL1l+tT4f9FY/CFyFKqdJzOAIWUBm0if/6L7dyHT8FFXqjY33TbF6lG5xQUcgdaYZvggyWb/ber4kLQan9AEHdJ+8LeCV8XcSX7w69eKyzBrjzaBS465q+I9Mye/vjrGRIvQ3iIkZtrH/PAYQs44LvAZT56qJhk5mWSS7pH11Z9wgPfxuI5XtEHkRjc+AOVzfWv9dZKfsy/ArB4F9fIhFBm3xsVYiskgEeWnGdr/AaAyohtIQxhzoPo3hy0VpB9xnynTEdbP/QAJbBVbFwK2lefxWcg/kL9dPwmMFbTFCP4ZLCMowPLqIqYOnUMmI4AiYAAr/Q+uNaHtRDr7+gtTo05zVoCeLnTuVmZzAbKHreeoc2EwncYsKXC+mS9omZ9zQMagVY50YrisywMdZ/z9XHRDN4rG8P2gG+gWL7SagdiUNW90dnK6Hq/09ZocsUD6EtaSyg8H50c=
   - secure: JUxj3ZggGB/TJnjVr6j4+SZeF92IY9/EhDQpw6m55M15D/Z2CQa+lmXxLYHCXBje4OgsEoD8J/xDqH2RY4cSW5iKSA6UL57fK906ZXAxvQZhrSiabQeXmLgTXx72EwByiGd/YmUNMj2x5F3BE9sf6HL/BGaA+Ej9UdQJwCHjkEhF1907T47X2M2fdpWmYSvqXiM/y1257AU4XfJaUldv6xTVXEdSqLDGNY8lUP/yrAbEahcTupNkojCMBvfV1vdd0hf89HBgeqc/CrSXmI6oziK43+UPNQP+EWUyFwkDMnX9PzhMpjdyAE/rRhwpXcBgMWE0APXp6M/lRASrAZ3+C+P2jZyUaGSgvhQpBrWu9ndJhsa9+dWsMknuk6T/x/6dbqTLEn1Y4Pv40I7du6FydX8Qm4LVNQA+jBNRRTVjD1Pek7lzCBaXXdAz5skYZbfg5fDMjjmmnz40ikfphKTp6X2zSmDpV0JHbSS/2I7Zo+W/tMasijqshGFCkn10a4h6MpnTV79w86O7uf6bVjkDvdnayp0YudGsTL3wbhh8WpM1WpNN+kYwHm8vbpiH2s0Ec0EemoSbwPWqRC1O+DeoQw9jTwSd4d1oFP6WAYpAVOPhCbPOrvzfSnHtaMPCicCWzs1LqG+nAlst2CPf7vl9hmKH8AII3gsMnaXjA4IRut8=
   - secure: nbH2opIN8E/5aBFUktPmg/97mZXm3Al6sM2r9Za5z6HO3G10DnOWpHOhWFqEUGR8L9qjsq27VqLzi0ot+QzZwRxfTwczO+YGp+t1jwfk/QRAbelg8cxO06OSmdvV4QeAQnCVS5ErZr/U9ggOmUMw/gY5UHHCFkkaQppd6c5bxi+e8v5Ftghr+z2ur0u+7KiuNF6bRAcwVkNbavKkB0Do4Fi30m5ehviBtYdPaxzFabXg34bVK5r14HIc5F7pmXBmb1aK49sNN60M3GKTMzb4ZEgVaAti/Rsjx7lF/lQmTnVs66LB2RkTMVDVn9AnOOAW/YJgAg3UZ8YK7UjckifY551oWTaAAoPxAb5ttfKy5Y6d4iMqIdCrorvah+H5y+kAIi56VRXpfbsEbuyGZaCcGVy9XkWkiQZlBkCH3Nl4qK+3QTNm3nUZirsGLoQywGpa+pZK2xCTmNALdLWyFeg4XTKWkWC4UqUJcp/I9b1vA/VHYZJparQ7jBkuA+f6VXncmEWzmRLqH6SPkt0Z4+I18FxPqPE2njoqr20CAs604wMPHhCTEraHbn+obnxG/lfvVY1OfLPXAUIY4vd4Bg7pL4TZSJU3BYhDPzjGIfmavi6YcDooURJAOcntXfI3s4Y/BywxIk06XrFEvlLwYX3NWijoB5kuHcn2nvc+S6K9pZI=
 before_install:
-- openssl aes-256-cbc -K $encrypted_a69ee582653e_key -iv $encrypted_a69ee582653e_iv
-  -in deployment/signingkey.asc.enc -out deployment/signingkey.asc -d
-- echo "allow-loopback-pinentry" > ~/.gnupg/gpg-agent.conf
-- gpg2 --batch --keyring=$TRAVIS_BUILD_DIR/pubring.gpg --secret-keyring=$TRAVIS_BUILD_DIR/secring.gpg
-  --no-default-keyring --import deployment/signingkey.asc
+- .travis/before-install.sh
