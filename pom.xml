@@ -54,7 +54,7 @@
 
         <!-- Dependencies -->
         <fabric8-mockwebserver.version>0.1.8</fabric8-mockwebserver.version>
-        <jackson.version>2.11.2</jackson.version>
+        <jackson.version>2.11.3</jackson.version>
         <junit-jupiter.version>5.7.0</junit-jupiter.version>
         <okhttp3.version>4.9.0</okhttp3.version>
         <spring-boot.version>[2.3.0.RELEASE,2.4.0.M0)</spring-boot.version>
