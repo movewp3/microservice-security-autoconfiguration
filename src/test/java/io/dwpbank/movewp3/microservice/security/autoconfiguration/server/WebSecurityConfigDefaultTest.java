@@ -2,6 +2,7 @@ package io.dwpbank.movewp3.microservice.security.autoconfiguration.server;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -23,7 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootApplication
 @SpringBootTest(properties = {"spring.security.oauth2.resourceserver.jwt.jwk-set-uri=http://foo"})
 @ContextConfiguration
-public class WebSecurityConfigTest {
+class WebSecurityConfigDefaultTest {
 
   @Autowired
   private WebApplicationContext context;
@@ -31,7 +32,7 @@ public class WebSecurityConfigTest {
   private MockMvc mockMvc;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     mockMvc = MockMvcBuilders
         .webAppContextSetup(context)
         .alwaysDo(print())
@@ -40,16 +41,25 @@ public class WebSecurityConfigTest {
   }
 
   @Test
-  public void unauthenticatedAccessReturnsUnauthorized() throws Exception {
+  void unauthenticatedAccessReturnsUnauthorized() throws Exception {
     mockMvc
         .perform(get("/foo"))
         .andExpect(status().isUnauthorized());
   }
 
   @Test
-  public void actuatorCanBeAccessedWithoutAuthentication() throws Exception {
+  void actuatorCanBeAccessedViaGetWithoutAuthentication() throws Exception {
     mockMvc
-        .perform(get("/actuator/bar"))
+        .perform(get("/actuator/get"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  void actuatorCanBeAccessedViaPostWithoutAuthentication() throws Exception {
+    mockMvc
+        .perform(post("/actuator/post")
+            .contentType("text/plain;charset=UTF-8")
+            .content("someText"))
         .andExpect(status().isOk());
   }
 }
