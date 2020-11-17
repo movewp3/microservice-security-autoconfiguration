@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.dwpbank.movewp3</groupId>
     <artifactId>microservice-security-autoconfiguration</artifactId>
-    <version>0.6.1-SNAPSHOT</version>
+    <version>0.7.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>MoveWP3 Microservice Security Autoconfiguration</name>
