@@ -4,7 +4,7 @@
 
 
 A Spring-Security-based library providing a no-frills approach to enable the verification of HTTP/REST authentication via OpenID Connect and consumption of other OAuth2-protected services for a microservice.
-In accordance with the stateless REST approach, session management and csrf tokens are disabled. 
+In accordance with the stateless REST approach, session management and CSRF tokens are disabled. 
 
 ## Usage
 
@@ -22,9 +22,11 @@ To make use if this starter, add the following dependency to your POM;
 
 To enable OAuth2/OpenID-Connect-based protection for your resource server, make sure to set the property `spring.security.oauth2.resourceserver.jwt.jwk-set-uri`. We recommend that you test proper authentication handling from within your unit tests. For an example, refer to `WebSecurityConfigTest`.
 
-The `/actuator/*` endpoints are currently exempt from authentication by default.
-You can configure an allowlist using a property, i.e.:
-`io.dwpbank.movewp3.microservice.security.allowlist=/foo/**,/bar/**`.
+The `/actuator/*` endpoints are currently exempt from authentication by default. You can override this default by setting the property `io.dwpbank.movewp3.microservice.security.allowlist` to a comma-separated list of endpoints to expose without the need to authenticate, i.e.:
+
+```
+io.dwpbank.movewp3.microservice.security.allowlist=/foo/**,/bar/**
+```
 
 ### Client
 
