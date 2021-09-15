@@ -21,11 +21,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 @AutoConfigureBefore(OAuth2ClientAutoConfiguration.class)
 @ConditionalOnProperty("spring.security.oauth2.resourceserver.jwt.jwk-set-uri")
-class WebSecurityAutoConfiguration {
+public class WebSecurityAutoConfiguration {
 
   @Bean
   WebSecurityConfigurerAdapter webSecurityConfigurerAdapter() {
-    return new OpinionatedWebSecurityConfigurerAdapter();
+    return new OidcResourceServerWebSecurityConfigurerAdapter();
   }
 }
 

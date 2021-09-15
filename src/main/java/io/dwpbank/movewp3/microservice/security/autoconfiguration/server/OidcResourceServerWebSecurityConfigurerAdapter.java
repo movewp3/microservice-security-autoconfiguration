@@ -10,7 +10,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
  * <code>/actuator/*</code> as soon as the property <code>microservice.security.oauth2.resourceserver.jwt.jwk-set-uri</code>
  * is set to the JWK Set URI of an OpenID Connect provider.
  */
-class OpinionatedWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+class OidcResourceServerWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
   @Value("${io.dwpbank.movewp3.microservice.security.allowlist:/actuator/**}")
   private String[] allowlist;
