@@ -1,1 +1,2 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=io.dwpbank.movewp3.microservice.security.autoconfiguration.server.WebSecurityConfig,io.dwpbank.movewp3.microservice.security.autoconfiguration.client.WebClientOauth2AutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=io.dwpbank.movewp3.microservice.security.autoconfiguration.server.WebSecurityAutoConfiguration,\
+  io.dwpbank.movewp3.microservice.security.autoconfiguration.client.WebClientOauth2AutoConfiguration
