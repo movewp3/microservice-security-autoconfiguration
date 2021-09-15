@@ -1,0 +1,22 @@
+name: Java CI
+
+on:
+  - push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Maven build
+        run: ./mvnw clean verify --batch-mode --errors --fail-at-end --show-version --update-snapshots

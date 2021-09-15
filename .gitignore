@@ -56,4 +56,3 @@ buildNumber.properties
 !.vscode/extensions.json
 .classpath
 .project
-deployment/signingkey.asc

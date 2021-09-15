@@ -1,17 +1,22 @@
-<gitVersioning>
-  <branch>
-    <pattern>master</pattern>
-    <versionFormat>${version}</versionFormat>
-  </branch>
-  <branch>
-    <pattern><![CDATA[feature/(?<feature>.+)]]></pattern>
-    <versionFormat>${version}</versionFormat>
-  </branch>
-  <tag>
-    <pattern><![CDATA[v(?<tagVersion>[0-9].*)]]></pattern>
-    <versionFormat>${tagVersion}</versionFormat>
-  </tag>
-  <commit>
-    <versionFormat>${version}</versionFormat>
-  </commit>
-</gitVersioning>
+<configuration xmlns="https://github.com/qoomon/maven-git-versioning-extension"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="https://github.com/qoomon/maven-git-versioning-extension https://qoomon.github.io/maven-git-versioning-extension/configuration-7.0.0.xsd">
+
+    <disable>false</disable>
+    <refs considerTagsOnBranches="true">
+        <ref type="tag">
+            <pattern><![CDATA[^v(?<version>[0-9]+\.[0-9]+\.[0-9]+)$]]></pattern>
+            <version>${ref.version}</version>
+        </ref>
+
+        <ref type="branch">
+            <pattern>.+</pattern>
+            <describeTagPattern><![CDATA[^v(?<version>[0-9]+\.[0-9]+\.[0-9]+)$]]></describeTagPattern>
+            <version>${version}</version>
+        </ref>
+    </refs>
+
+    <rev>
+        <version>${version}</version>
+    </rev>
+</configuration>
