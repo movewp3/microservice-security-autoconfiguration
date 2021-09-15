@@ -195,11 +195,6 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <executable>gpg2</executable>
-                        <defaultKeyring>false</defaultKeyring>
-                        <passphrase>${env.PASSPHRASE}</passphrase>
-                        <publicKeyring>${env.TRAVIS_BUILD_DIR}/pubring.gpg</publicKeyring>
-                        <secretKeyring>${env.TRAVIS_BUILD_DIR}/secring.gpg</secretKeyring>
                         <gpgArguments>
                             <arg>--pinentry-mode</arg>
                             <arg>loopback</arg>
