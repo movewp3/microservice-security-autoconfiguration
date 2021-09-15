@@ -24,7 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootApplication
 @SpringBootTest(properties = {"spring.security.oauth2.resourceserver.jwt.jwk-set-uri=http://foo"})
 @ContextConfiguration
-class WebSecurityConfigDefaultTest {
+public class WebSecurityConfigDefaultTest {
 
   @Autowired
   private WebApplicationContext context;
