@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @WebMvcTest
-@ImportAutoConfiguration({WebSecurityConfig.class})
+@ImportAutoConfiguration({WebSecurityAutoConfiguration.class})
 @TestPropertySource(properties = {
     "spring.security.oauth2.resourceserver.jwt.jwk-set-uri=http://foo",
     "io.dwpbank.movewp3.microservice.security.allowlist=/get/**,/post/**,/allowlisted/**"})

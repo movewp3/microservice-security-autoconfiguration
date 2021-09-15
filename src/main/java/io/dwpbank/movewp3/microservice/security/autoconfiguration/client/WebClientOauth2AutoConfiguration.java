@@ -59,7 +59,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 @ConditionalOnBean(ClientRegistrationRepository.class)
 @AutoConfigureAfter({WebClientAutoConfiguration.class, OAuth2ClientAutoConfiguration.class, JacksonAutoConfiguration.class})
-public class WebClientOauth2AutoConfiguration {
+class WebClientOauth2AutoConfiguration {
 
   @Bean
   @Scope("prototype")
