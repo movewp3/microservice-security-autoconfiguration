@@ -2,6 +2,7 @@ package io.dwpbank.movewp3.microservice.security.autoconfiguration.server;
 
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 @AutoConfigureBefore(OAuth2ClientAutoConfiguration.class)
 @ConditionalOnProperty("spring.security.oauth2.resourceserver.jwt.jwk-set-uri")
+@ConditionalOnWebApplication
 public class WebSecurityAutoConfiguration {
 
   @Bean
