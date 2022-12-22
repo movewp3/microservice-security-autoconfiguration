@@ -26,6 +26,7 @@ import org.springframework.web.reactive.function.client.WebClient;
  * As a prerequisite the OAuth2 client registration needs to be configured using standard Spring Security means, such as:
  * </p>
  * <pre>
+ *   {@code
  *   spring:
  *    security:
  *      oauth2:
@@ -39,6 +40,7 @@ import org.springframework.web.reactive.function.client.WebClient;
  *          provider:
  *           example-provider:
  *             token-uri: https://oauth2.example.com/oauth2/token
+ *  }
  * </pre>
  *
  * <p>
@@ -73,7 +75,6 @@ public class WebClientOauth2AutoConfiguration {
     return oauth2WebClientBuilder;
   }
 
-  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   @Bean
   public OAuth2AuthorizedClientManager authorizedClientManager(
       ClientRegistrationRepository clientRegistrationRepository,
@@ -91,7 +92,6 @@ public class WebClientOauth2AutoConfiguration {
     return authorizedClientManager;
   }
 
-  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   @Bean
   public static ServletOAuth2AuthorizedClientExchangeFilterFunction oAuth2ExchangeFilterFunction(
       @Value("${io.dwpbank.microservice-security-autoconfiguration.default-client-registration-id:default}") String defaultClientRegistrationId,

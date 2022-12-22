@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.dwpbank.movewp3</groupId>
     <artifactId>microservice-security-autoconfiguration</artifactId>
-    <version>0.7.2-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>MoveWP3 Microservice Security Autoconfiguration</name>
@@ -20,12 +20,12 @@
 
     <developers>
         <developer>
-            <name>Thilo-Alexander Ginkel</name>
-            <email>tg@tgbyte.de</email>
-        </developer>
-        <developer>
             <name>Jörn Gersdorf</name>
             <email>Joern.Gersdorf@dwpbank.de</email>
+        </developer>
+        <developer>
+            <name>Nils Eckert</name>
+            <email>nils.eckert@eckert-partner.it</email>
         </developer>
     </developers>
 
@@ -47,29 +47,29 @@
     </distributionManagement>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
 
         <project.build.outputTimestamp>${git.commit.timestamp.datetime}</project.build.outputTimestamp>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Dependencies -->
-        <fabric8-mockwebserver.version>0.1.8</fabric8-mockwebserver.version>
-        <jackson.version>2.12.5</jackson.version>
-        <junit-jupiter.version>5.8.0</junit-jupiter.version>
-        <okhttp3.version>4.9.1</okhttp3.version>
-        <spring-boot.version>[2.3.0.RELEASE,2.6.0.M0)</spring-boot.version>
-        <spring-security.version>[5.3.0.RELEASE,5.6.0.M0)</spring-security.version>
+        <fabric8-mockwebserver.version>0.2.2</fabric8-mockwebserver.version>
+        <jackson.version>2.14.1</jackson.version>
+        <okhttp3.version>4.10.0</okhttp3.version>
+        <spring-boot.version>[3.0.0,3.1.0)</spring-boot.version>
+        <spring-security.version>[6.0.0,6.1.0)</spring-security.version>
+        <junit-4.version>4.13.2</junit-4.version>
 
         <!-- Plugins -->
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
-        <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
-        <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
+        <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
+        <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
-        <sortpom-maven-plugin.version>3.0.0</sortpom-maven-plugin.version>
-        <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+        <sortpom-maven-plugin.version>3.2.0</sortpom-maven-plugin.version>
+        <versions-maven-plugin.version>2.14.1</versions-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -116,6 +116,14 @@
             <version>${okhttp3.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- Patch for CVE-2020-15250 junit 4 transitive dependency via com.squareup.okhttp3:mockwebserver -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit-4.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- End Patch -->
         <dependency>
             <groupId>io.fabric8</groupId>
             <artifactId>mockwebserver</artifactId>
@@ -129,12 +137,6 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>${junit-jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <version>${spring-boot.version}</version>
@@ -143,6 +145,10 @@
                 <exclusion>
                     <artifactId>junit-vintage-engine</artifactId>
                     <groupId>org.junit.vintage</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

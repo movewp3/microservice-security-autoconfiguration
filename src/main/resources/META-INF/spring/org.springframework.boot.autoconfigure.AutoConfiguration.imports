@@ -1,0 +1,2 @@
+io.dwpbank.movewp3.microservice.security.autoconfiguration.server.WebSecurityAutoConfiguration
+io.dwpbank.movewp3.microservice.security.autoconfiguration.client.WebClientOauth2AutoConfiguration
