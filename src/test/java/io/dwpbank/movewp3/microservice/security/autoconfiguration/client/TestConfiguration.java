@@ -25,7 +25,7 @@ public class TestConfiguration {
     return ClientRegistration.withRegistrationId("default")
         .clientId("client-1")
         .clientSecret("secret")
-        .clientAuthenticationMethod(ClientAuthenticationMethod.BASIC)
+        .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
         .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
         .scope("read", "write")
         .tokenUri(defaultMockServer.url("/oauth2/token"))
