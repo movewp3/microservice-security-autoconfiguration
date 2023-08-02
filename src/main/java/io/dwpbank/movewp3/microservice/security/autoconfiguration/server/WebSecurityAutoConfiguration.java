@@ -1,7 +1,10 @@
 package io.dwpbank.movewp3.microservice.security.autoconfiguration.server;
 
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration;
@@ -11,6 +14,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 /**
  * An autoconfiguration that enables OIDC-based authentication for all HTTP endpoints (except for <code>/actuator/*</code> as soon as the
@@ -29,14 +34,23 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityAutoConfiguration {
 
   @Value("${io.dwpbank.movewp3.microservice.security.allowlist:/actuator/**}")
-  private String[] allowlist;
+  private List<String> allowlist;
+
+  @Autowired
+  private HandlerMappingIntrospector introspector;
 
   @Bean
+  @ConditionalOnMissingBean
   SecurityFilterChain oidcResourceServerSecurityFilterChain(HttpSecurity http) throws Exception {
     // @formatter:off
     http
         .authorizeHttpRequests()
-        .requestMatchers(allowlist)
+        .requestMatchers(
+            allowlist
+                .stream()
+                .map(path -> new MvcRequestMatcher(introspector, path))
+                .toArray(MvcRequestMatcher[]::new)
+        )
         .permitAll()
         .anyRequest()
         .authenticated()
