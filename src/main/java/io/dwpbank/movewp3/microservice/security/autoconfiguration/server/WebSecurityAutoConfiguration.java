@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration;
@@ -40,7 +39,6 @@ public class WebSecurityAutoConfiguration {
   private HandlerMappingIntrospector introspector;
 
   @Bean
-  @ConditionalOnMissingBean
   SecurityFilterChain oidcResourceServerSecurityFilterChain(HttpSecurity http) throws Exception {
     // @formatter:off
     http
