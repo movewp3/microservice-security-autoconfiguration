@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.dwpbank.movewp3</groupId>
     <artifactId>microservice-security-autoconfiguration</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>3.4.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>MoveWP3 Microservice Security Autoconfiguration</name>
@@ -53,24 +53,23 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Dependencies -->
-        <fabric8-mockwebserver.version>0.2.2</fabric8-mockwebserver.version>
-        <jackson.version>2.14.1</jackson.version>
+        <spring-boot.version>[3.4,3.5)</spring-boot.version>
+        <spring-security.version>[6.2,6.3)</spring-security.version>
+        <jackson.version>2.18.2</jackson.version>
         <okhttp3.version>4.10.0</okhttp3.version>
-        <spring-boot.version>[3.0.0,3.1.0)</spring-boot.version>
-        <spring-security.version>[6.0.0,6.1.0)</spring-security.version>
-        <junit-4.version>4.13.2</junit-4.version>
+        <fabric8-mockwebserver.version>0.2.2</fabric8-mockwebserver.version>
 
         <!-- Plugins -->
-        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-        <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
-        <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
-        <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
-        <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
-        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
-        <sortpom-maven-plugin.version>3.2.0</sortpom-maven-plugin.version>
-        <versions-maven-plugin.version>2.14.1</versions-maven-plugin.version>
+        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
+        <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
+        <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
+        <maven-site-plugin.version>3.21.0</maven-site-plugin.version>
+        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
+        <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
+        <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
+        <sortpom-maven-plugin.version>3.4.1</sortpom-maven-plugin.version>
+        <versions-maven-plugin.version>2.18.0</versions-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -100,11 +99,10 @@
             <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-oauth2-resource-server</artifactId>
-            <version>${spring-security.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -117,14 +115,6 @@
             <version>${okhttp3.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- Patch for CVE-2020-15250 junit 4 transitive dependency via com.squareup.okhttp3:mockwebserver -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit-4.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- End Patch -->
         <dependency>
             <groupId>io.fabric8</groupId>
             <artifactId>mockwebserver</artifactId>
