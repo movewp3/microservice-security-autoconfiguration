@@ -1,6 +1,8 @@
 package io.dwpbank.movewp3.microservice.security.autoconfiguration.server;
 
 import io.dwpbank.movewp3.microservice.security.autoconfiguration.config.MicroserviceSecuritySettings;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -13,6 +15,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
@@ -38,7 +41,8 @@ public class WebSecurityAutoConfiguration {
   SecurityFilterChain oidcResourceServerSecurityFilterChainReduced(
       HttpSecurity http,
       MicroserviceSecuritySettings microserviceSecuritySettings,
-      HandlerMappingIntrospector introspector) throws Exception {
+      HandlerMappingIntrospector introspector,
+      @Qualifier("oauth2AuthenticationEntryPoint") Optional<AuthenticationEntryPoint> oauth2AuthenticationEntryPoint) throws Exception {
     return http.csrf(AbstractHttpConfigurer::disable)
         .logout(AbstractHttpConfigurer::disable)
         .anonymous(AbstractHttpConfigurer::disable)
@@ -50,7 +54,10 @@ public class WebSecurityAutoConfiguration {
                 .permitAll()
                 .anyRequest()
                 .authenticated())
-        .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+        .oauth2ResourceServer(oauth2 -> {
+          oauth2.jwt(Customizer.withDefaults());
+          oauth2AuthenticationEntryPoint.ifPresent(oauth2::authenticationEntryPoint);
+        })
         .sessionManagement(sessionManagementConfigurer -> sessionManagementConfigurer.sessionCreationPolicy(
             SessionCreationPolicy.STATELESS))
         .exceptionHandling(Customizer.withDefaults())

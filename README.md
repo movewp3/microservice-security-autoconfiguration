@@ -32,6 +32,19 @@ i.e.:
 io.dwpbank.movewp3.microservice.security.allowlist=/foo/**,/bar/**
 ```
 
+If required, the OAuth 2.0 Resource Server can be customized via an optional Bean "oauth2AuthenticationEntryPoint" of type
+org.springframework.security.web.AuthenticationEntryPoint.
+
+```java
+
+@Bean
+AuthenticationEntryPoint oauth2AuthenticationEntryPoint() {
+  return new AuthenticationEntryPoint() {
+    // TODO - implementation required
+  };
+}
+```
+
 ### Client
 
 To add OAuth2 support to `WebClient`, configure an OAuth2 client registration as outlined in
