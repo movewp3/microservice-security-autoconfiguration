@@ -1,13 +1,14 @@
 package io.dwpbank.movewp3.microservice.security.autoconfiguration.client;
 
-import org.springframework.beans.factory.annotation.Value;
+import io.dwpbank.movewp3.microservice.security.autoconfiguration.config.MicroserviceSecuritySettings;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
@@ -45,8 +46,8 @@ import org.springframework.web.reactive.function.client.WebClient;
  *
  * <p>
  * If your client registration id is called <code>default</code> as in the example, that's all you need to do. If you choose to pick a
- * different name, make sure to also set the property <code>io.dwpbank.microservice-security-autoconfiguration.default-client-registration-id</code>
- * to your client registration id.
+ * different name, make sure to also set the property
+ * <code>io.dwpbank.microservice-security-autoconfiguration.default-client-registration-id</code> to your client registration id.
  * </p>
  * <p>
  * To obtain an OAuth2-enabled {@link WebClient.Builder}, use <code>@OAuth2Aware</code> when injecting the builder as in (or equivalent
@@ -58,9 +59,10 @@ import org.springframework.web.reactive.function.client.WebClient;
  * private WebClient.Builder webClientBuilder;
  * </pre>
  */
-@Configuration
+@AutoConfiguration
 @ConditionalOnBean(ClientRegistrationRepository.class)
 @AutoConfigureAfter({WebClientAutoConfiguration.class, OAuth2ClientAutoConfiguration.class, JacksonAutoConfiguration.class})
+@EnableConfigurationProperties({MicroserviceSecuritySettings.class})
 public class WebClientOauth2AutoConfiguration {
 
   @Bean
@@ -94,23 +96,23 @@ public class WebClientOauth2AutoConfiguration {
 
   @Bean
   public static ServletOAuth2AuthorizedClientExchangeFilterFunction oAuth2ExchangeFilterFunction(
-      @Value("${io.dwpbank.microservice-security-autoconfiguration.default-client-registration-id:default}") String defaultClientRegistrationId,
+      MicroserviceSecuritySettings microserviceSecuritySettings,
       OAuth2AuthorizedClientManager authorizedClientManager,
       ClientRegistrationRepository clientRegistrationRepository) {
     final var filterFunction = new ServletOAuth2AuthorizedClientExchangeFilterFunction(
         authorizedClientManager);
 
-    if (clientRegistrationRepository.findByRegistrationId(defaultClientRegistrationId) == null) {
+    if (clientRegistrationRepository.findByRegistrationId(microserviceSecuritySettings.getDefaultOauth2ClientRegistrationId()) == null) {
       throw new IllegalArgumentException(
           String.format("The configured OAuth2 default client registration id \"%s\" does not seem to exist. " +
                   "Please make sure that the client registration id of your OAuth2 client configured below " +
                   "spring.security.oauth2.client.registration matches what you have configured for " +
-                  "io.dwpbank.microservice-security-autoconfiguration.default-client-registration-id",
-              defaultClientRegistrationId)
+                  "io.dwpbank.movewp3.microservice.security.default-oauth2-client-registration-id",
+              microserviceSecuritySettings.getDefaultOauth2ClientRegistrationId())
       );
     }
 
-    filterFunction.setDefaultClientRegistrationId(defaultClientRegistrationId);
+    filterFunction.setDefaultClientRegistrationId(microserviceSecuritySettings.getDefaultOauth2ClientRegistrationId());
     return filterFunction;
   }
 }
