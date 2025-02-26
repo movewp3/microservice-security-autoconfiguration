@@ -1,6 +1,6 @@
 package io.dwpbank.movewp3.microservice.security.autoconfiguration.server;
 
-import io.dwpbank.movewp3.microservice.security.autoconfiguration.config.MicroserviceSecuritySettings;
+import io.dwpbank.movewp3.microservice.security.autoconfiguration.config.MicroserviceSecurityConfigurationProperties;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -34,20 +34,20 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 @AutoConfigureBefore(OAuth2ClientAutoConfiguration.class)
 @ConditionalOnProperty("spring.security.oauth2.resourceserver.jwt.jwk-set-uri")
 @ConditionalOnWebApplication
-@EnableConfigurationProperties({MicroserviceSecuritySettings.class})
+@EnableConfigurationProperties({MicroserviceSecurityConfigurationProperties.class})
 public class WebSecurityAutoConfiguration {
 
   @Bean
   SecurityFilterChain oidcResourceServerSecurityFilterChainReduced(
       HttpSecurity http,
-      MicroserviceSecuritySettings microserviceSecuritySettings,
+      MicroserviceSecurityConfigurationProperties microserviceSecurityConfigurationProperties,
       HandlerMappingIntrospector introspector,
       @Qualifier("oauth2AuthenticationEntryPoint") Optional<AuthenticationEntryPoint> oauth2AuthenticationEntryPoint) throws Exception {
     return http.csrf(AbstractHttpConfigurer::disable)
         .logout(AbstractHttpConfigurer::disable)
         .anonymous(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
-            authorizationManagerRequestMatcherRegistry.requestMatchers(microserviceSecuritySettings.getAllowlist()
+            authorizationManagerRequestMatcherRegistry.requestMatchers(microserviceSecurityConfigurationProperties.getAllowlist()
                     .stream()
                     .map(path -> new MvcRequestMatcher(introspector, path))
                     .toArray(MvcRequestMatcher[]::new))

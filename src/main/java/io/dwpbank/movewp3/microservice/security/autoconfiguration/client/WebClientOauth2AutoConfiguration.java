@@ -1,6 +1,6 @@
 package io.dwpbank.movewp3.microservice.security.autoconfiguration.client;
 
-import io.dwpbank.movewp3.microservice.security.autoconfiguration.config.MicroserviceSecuritySettings;
+import io.dwpbank.movewp3.microservice.security.autoconfiguration.config.MicroserviceSecurityConfigurationProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -62,7 +62,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @AutoConfiguration
 @ConditionalOnBean(ClientRegistrationRepository.class)
 @AutoConfigureAfter({WebClientAutoConfiguration.class, OAuth2ClientAutoConfiguration.class, JacksonAutoConfiguration.class})
-@EnableConfigurationProperties({MicroserviceSecuritySettings.class})
+@EnableConfigurationProperties({MicroserviceSecurityConfigurationProperties.class})
 public class WebClientOauth2AutoConfiguration {
 
   @Bean
@@ -96,23 +96,24 @@ public class WebClientOauth2AutoConfiguration {
 
   @Bean
   public static ServletOAuth2AuthorizedClientExchangeFilterFunction oAuth2ExchangeFilterFunction(
-      MicroserviceSecuritySettings microserviceSecuritySettings,
+      MicroserviceSecurityConfigurationProperties microserviceSecurityConfigurationProperties,
       OAuth2AuthorizedClientManager authorizedClientManager,
       ClientRegistrationRepository clientRegistrationRepository) {
     final var filterFunction = new ServletOAuth2AuthorizedClientExchangeFilterFunction(
         authorizedClientManager);
 
-    if (clientRegistrationRepository.findByRegistrationId(microserviceSecuritySettings.getDefaultOauth2ClientRegistrationId()) == null) {
+    if (clientRegistrationRepository.findByRegistrationId(
+        microserviceSecurityConfigurationProperties.getDefaultOauth2ClientRegistrationId()) == null) {
       throw new IllegalArgumentException(
           String.format("The configured OAuth2 default client registration id \"%s\" does not seem to exist. " +
                   "Please make sure that the client registration id of your OAuth2 client configured below " +
                   "spring.security.oauth2.client.registration matches what you have configured for " +
                   "io.dwpbank.movewp3.microservice.security.default-oauth2-client-registration-id",
-              microserviceSecuritySettings.getDefaultOauth2ClientRegistrationId())
+              microserviceSecurityConfigurationProperties.getDefaultOauth2ClientRegistrationId())
       );
     }
 
-    filterFunction.setDefaultClientRegistrationId(microserviceSecuritySettings.getDefaultOauth2ClientRegistrationId());
+    filterFunction.setDefaultClientRegistrationId(microserviceSecurityConfigurationProperties.getDefaultOauth2ClientRegistrationId());
     return filterFunction;
   }
 }

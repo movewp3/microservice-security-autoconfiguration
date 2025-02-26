@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ConfigurationProperties("io.dwpbank.movewp3.microservice.security")
-public class MicroserviceSecuritySettings {
+public class MicroserviceSecurityConfigurationProperties {
 
   /**
    * Allow list for the
