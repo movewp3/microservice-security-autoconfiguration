@@ -35,6 +35,7 @@ class WebSecurityConfigWithAuthEntryPointTest {
 
   private MockMvc mockMvc;
 
+  @Autowired
   @MockitoSpyBean
   private AuthenticationEntryPoint oauth2AuthenticationEntryPoint;
 

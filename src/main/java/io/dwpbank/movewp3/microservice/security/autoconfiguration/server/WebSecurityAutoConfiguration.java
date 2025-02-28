@@ -38,6 +38,7 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 public class WebSecurityAutoConfiguration {
 
   @Bean
+  @SuppressWarnings("java:S4502")
   SecurityFilterChain oidcResourceServerSecurityFilterChainReduced(
       HttpSecurity http,
       MicroserviceSecurityConfigurationProperties microserviceSecurityConfigurationProperties,
