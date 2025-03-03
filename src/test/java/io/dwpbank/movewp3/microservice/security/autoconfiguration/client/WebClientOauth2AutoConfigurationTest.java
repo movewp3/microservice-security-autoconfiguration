@@ -35,7 +35,7 @@ public class WebClientOauth2AutoConfigurationTest {
   private DefaultMockServer mockServer;
 
   @Test
-  public void testOauth2WebClientSubmitsRequestsWithBearerToken() {
+  void testOauth2WebClientSubmitsRequestsWithBearerToken() {
     mockServer
         .expect()
         .post()
@@ -64,7 +64,7 @@ public class WebClientOauth2AutoConfigurationTest {
   }
 
   @Test
-  public void testRegularWebClientOmitsBearerToken() {
+  void testRegularWebClientOmitsBearerToken() {
     var responseEntity = webClientBuilder
         .baseUrl("http://foo")
         .exchangeFunction(clientRequest -> {
